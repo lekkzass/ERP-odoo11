@@ -1,0 +1,140 @@
+//created by hafizalwi @23dec
+
+.o_helpdesk_dashboard {
+
+    position: fixed;
+    border: 8px solid #f9f9f9;
+    z-index: 10;
+    width: 100%;
+}
+
+
+
+
+.o_helpdesk_dashboard > div > table > tbody > tr > td.onUrgentPriorityTickets {
+    background-color: #A61414; #red
+
+}
+
+.o_helpdesk_dashboard > div > table {
+    margin-bottom: 0;
+    border-spacing: 10px 0px;
+    border-collapse: separate;
+    white-space: initial;
+
+    width: 50%;
+    margin-bottom: 1rem;
+    color: #444B5A;
+    float:left
+}
+
+
+.o_text{
+    text-align: left;
+}
+
+.o_helpdesk_dashboard > div > table > tbody > tr > td {
+    vertical-align: middle;
+    text-align: center;
+    border-top: 1px solid white;
+    width: 25%;
+    height: 33px;
+}
+
+.table-sm td {
+    padding: 0.3rem;
+}
+
+.o_helpdesk_dashboard > div > table > tbody > tr > td.o_highlight, .o_helpdesk_dashboard > div > table > tbody > tr > td .o_highlight {
+    font-size: 20px;
+}
+
+.o_helpdesk_dashboard > div > table > tbody > tr > td.o_main {
+    background-color: #017e84;
+    color: #f6f7fa;
+}
+
+.o_helpdesk_dashboard .o_dashboard_action {
+    cursor: pointer;
+}
+
+.o_helpdesk_dashboard > div > table > tbody > tr > td {
+    vertical-align: middle;
+    text-align: center;
+    border-top: 1px solid white;
+    width: 25%;
+    height: 33px;
+}
+
+.table-sm td {
+    padding: 0.3rem;
+}
+
+.o_helpdesk_dashboard > div > table > tbody > tr > td .o_highlight {
+    font-size: 20px;
+}
+
+.o_helpdesk_dashboard > div > table > tbody > tr > td span {
+    display: inline;
+}
+
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: 14px;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.o_helpdesk_dashboard > div > table > tbody > tr > td.o_main a{
+    color: white;
+    background-color:
+}
+.o_helpdesk_dashboard > div > table > tbody > tr > td.o_successrate {
+    background-color: #fff77a;
+    color: black;
+}
+.o_helpdesk_dashboard > div > table > tbody > tr > td.o_secondary a{
+    background-color: #f6f7fa;
+
+}
+
+.o_helpdesk_dashboard > div > table > tbody > tr > td span {
+    display: inline;
+}
+
+
+.o_helpdesk_dashboard > div > table > tbody > tr > td {
+    text-align: center;
+}
+
+.o_helpdesk_dashboard > div > table {
+    border-spacing: 10px 0px;
+    border-collapse: separate;
+    white-space: initial;
+}
+
+
+.o_web_client > .o_action_manager {
+    direction: ltr;
+}
+
+@media (min-width: 768px) {
+  .o_kanban_view.o_kanban_dashboard.o_helpdesk_kanban .o_kanban_group:not(.o_column_folded) {
+    width: 452px;
+  }
+  .o_kanban_view.o_kanban_dashboard.o_helpdesk_kanban .o_kanban_group.o_column_folded {
+    height: 420px;
+  }
+  .o_kanban_view.o_kanban_dashboard.o_helpdesk_kanban .o_kanban_record {
+    width: 420px;
+    min-height: 220px;
+  }
+}
+
+
+
+
+
