@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:preserve="space">
+    <t t-name="helpdesk-template">
+
+    <div class="o_helpdesk_dashboard container" style="background-color:#ffffff;" >
+        <div>
+            <table class="table table-sm">
+                <tbody><tr>
+                        <td class="o_text">
+                            <div class="o_highlight">My Tickets</div>
+                        </td>
+                        <td class=" o_main o_dashboard_action onUnattendedTickets" title="My Open Tickets" name="helpdesk.helpdesk_my_ticket_action_no_create" show_demo="false">
+                            <a href="#">
+                                <span class="o_highlight test" id="opentickets_id"></span>&lt;br&gt;
+                                Open Tickets
+                            </a>
+                        </td>
+                        <td class=" o_main o_dashboard_action onHighPriorityTickets" title="My High Priority Tickets" name="helpdesk.helpdesk_my_ticket_action_no_create" context="{'search_default_high_priority': True}" show_demo="false">
+                            <a href="#">
+                                <span class="o_highlight" id="highprioritytickets_id">0</span>&lt;br&gt;
+                                High Priority (<span title="two stars, with a maximum of three" role="img" aria-label="Two stars, with a maximum of three"><span class="fa fa-star" style="color: gold"></span><span class="fa fa-star" style="color: gold"></span></span>)
+                            </a>
+                        </td>
+                        <td class="  o_main o_dashboard_action onUrgentPriorityTickets" title="My Urgent Tickets" name="helpdesk.helpdesk_my_ticket_action_no_create" context="{'search_default_urgent_priority': True}" show_demo="false">
+                            <a href="#">
+                                <span class="o_highlight" id="urgenttickets_id">0</span> &lt;br&gt;
+                                Urgent (<span title="Three stars, maximum score" role="img" aria-label="Three stars, maximum score"><span class="fa fa-star" style="color: gold"></span><span class="fa fa-star" style="color: gold"></span><span class="fa fa-star" style="color: gold"></span></span>)
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="o_text">Average Open Time</td>
+                        <td title="My Average Solve Time Analysis (days, hh:mm:ss)" class="  o_main o_dashboard_action " name="helpdesk.helpdesk_ticket_action_dashboard" show_demo="false">
+                            <span id="avg_openhours_id">00:00</span>
+                        </td>
+                        <td title="My High Priority Tickets Analysis" class="  o_main o_dashboard_action" name="helpdesk.helpdesk_ticket_action_dashboard" context="{'search_default_priority': '2'}" show_demo="false">
+
+                                <span id="avg_openhours_highpriority_id">00:00</span>
+
+                        </td>
+                        <td title="My Urgent Tickets Analysis" class="  o_main o_dashboard_action" name="helpdesk.helpdesk_ticket_action_dashboard" context="{'search_default_priority': '3'}" show_demo="false">
+                            <span id="avg_openhours_urgent_id"> 00:00</span>
+
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="o_text">SLA Failed</td>
+                        <td class=" o_main o_dashboard_action onSLAFailed" name="helpdesk.helpdesk_ticket_action_sla" title="My Failed Tickets" show_demo="false">
+                            <a href="#" class="o_dashboard_action" name="helpdesk.helpdesk_ticket_action_sla" data-extra="overdue" show_demo="false" id="failedSLA_id">
+                                0
+                            </a>
+                        </td>
+                        <td class=" o_main o_dashboard_action onSLAFailed_highpriority" name="helpdesk.helpdesk_ticket_action_sla" title="My High Priority Failed Tickets" context="{'search_default_priority': '2'}" show_demo="false">
+                            <a href="#" data-extra="overdue" id="failedSLA_highpriority_id">
+                                0
+                            </a>
+                        </td>
+                        <td class=" o_main o_dashboard_action onSLAFailed_urgent" name="helpdesk.helpdesk_ticket_action_sla" title="My Urgent Failed Tickets" context="{'search_default_priority': '3'}" show_demo="false">
+                            <a href="#" data-extra="overdue" id="failedSLA_urgent_id">
+                                0
+                            </a>
+                        </td>
+                    </tr>
+                </tbody></table>
+            </div>
+
+        <div>
+                <table class="table table-sm">
+                    <tbody><tr>
+                        <td class="o_text">
+                            <div class="o_highlight">My Performance</div>
+                            Today
+                        </td>
+                        <td  title="Tickets Closed Today" class="o_dashboard_action o_main onClosedTicketsToday" name="helpdesk.helpdesk_ticket_action_close_analysis" show_demo="false">
+                            <a href="#">
+                                <span class="o_highlight" id="closedtickets_today_id">0</span>&lt;br&gt;
+                                Closed Tickets
+                            </a>
+                        </td>
+
+                        <td title="Percentage of tickets that were closed without failing any SLAs." data-action-title="Tickets Analysis" class="o_dashboard_action  o_successrate" name="helpdesk.helpdesk_ticket_action_success" show_demo="false">
+
+                            <a href="#">
+                                <span class="o_highlight" id="success_rate_today_id"></span><span>%</span>
+                                &lt;br&gt;
+                                Success Rate
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="o_text">Last 7 days</td>
+                        <td title="Tickets Closed Last 7 Days" class=" o_secondary o_dashboard_action onClosedTicketsWeek" name="helpdesk.helpdesk_ticket_action_7days_analysis" show_demo="false">
+                            <a href="#"><span id="closedtickets_week_id">0</span>
+
+                            </a>
+                        </td>
+
+                        <td data-action-title="Tickets Analysis" title="Percentage of tickets that were closed without failing any SLAs." class=" o_secondary o_dashboard_action" name="helpdesk.helpdesk_ticket_action_7dayssuccess" show_demo="false">
+                            <a href="#">
+                                <span id="success_rate_week_id"></span><span>%</span>
+                            </a>
+                        </td>
+                    </tr><tr>
+                        <td class="o_text ">This month</td>
+                        <td class=" o_secondary onClosedTicketsMonth">
+                            <a href="#">
+                                <span id="closedtickets_month_id">
+                                </span>
+                            </a>
+                        </td>
+
+                        <td class=" o_secondary">
+                            <a href="#">
+                                <span id="success_rate_month_id"></span><span>%</span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody></table>
+            </div>
+    </div>
+
+    </t>
+</templates>
