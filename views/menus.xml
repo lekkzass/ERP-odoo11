@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <menuitem id="website_supportzayd_parent_menu" name="iSupport Ticket" groups="support_staff,support_technician" sequence="40" web_icon="website_supportzayd,static/description/menu_icon.png"/>
+        <menuitem id="support_dashboard_menu" name="iSupport Dashboard"  parent="website_supportzayd_parent_menu" action="support_dashboard_action"  groups="support_manager,support_staff"  sequence="1"/>
+        <menuitem id="website_supportzayd_ticket_menu" name="Support Tickets" parent="website_supportzayd_parent_menu" action="website_supportzayd_ticket_action" groups="support_staff" sequence="10"/>
+        <menuitem id="website_supportzayd_ticket_menu_technician" name="Support Tickets (Technician)" parent="website_supportzayd_parent_menu" action="website_supportzayd_ticket_action_technician" groups="support_technician,support_manager" sequence="10"/>
+        <menuitem id="website_supportzayd_config_parent_menu" name="Configuration" parent="website_supportzayd_parent_menu" groups="support_manager" sequence="999"/>
+
+        <!-- <menuitem id="website_supportzayd_ticket_menu_technician_checkin" name="Technician Check-in" parent="website_supportzayd_parent_menu" action="website_supportzayd_ticket_action_technician_checkin" groups="support_technician, support_manager" sequence="1"/> -->
+        <!--<menuitem id="website_supportzayd_ticket_dashboard_menu" name="Support Tickets dashboard" parent="website_supportzayd_parent_menu" action="website_supportzayd_ticket_dashboard_action" groups="support_technician,support_staff,support_manager" sequence="10"/>-->
+        <!--<menuitem id="support_dashboard_menu" name="Support Dashboard (Dev.)" parent="website_supportzayd_parent_menu" action="support_dashboard_action" sequence="10" groups="support_staff,support_manager"/>
+        -->
+
+        <menuitem id="website_supportzayd_ticket_header_equipment" name="Equipments Settings" parent="website_supportzayd_config_parent_menu" groups="support_manager" sequence="10"/>
+        <menuitem id="website_supportzayd_ticket_header_ticket" name="Tickets Settings" parent="website_supportzayd_config_parent_menu" groups="support_manager" sequence="16"/>
+        <menuitem id="website_supportzayd_ticket_header_sla" name="SLA Settings" parent="website_supportzayd_config_parent_menu" groups="support_manager" sequence="24"/>
+        <menuitem id="website_supportzayd_ticket_header_module" name="Module Settings" parent="website_supportzayd_config_parent_menu" groups="support_manager" sequence="26"/>
+        <menuitem id="website_supportzayd_ticket_categories_menu" name="Categories" parent="website_supportzayd_ticket_header_ticket" action="website_supportzayd_ticket_categories_action" groups="support_manager" sequence="17"/>
+        <menuitem id="website_supportzayd_ticket_subcategory_menu" name="Sub Categories" parent="website_supportzayd_ticket_header_ticket" action="website_supportzayd_ticket_subcategory_action" groups="support_manager" sequence="18"/>
+        <menuitem id="website_supportzayd_ticket_item_menu" name="Equipments" parent="website_supportzayd_ticket_header_equipment" action="website_supportzayd_ticket_item_action" groups="support_manager" sequence="11"/>
+        <menuitem id="website_supportzayd_ticket_states_menu" name="States" parent="website_supportzayd_ticket_header_ticket" action="website_supportzayd_ticket_states_action" groups="support_manager" sequence="20"/>
+        <menuitem id="website_supportzayd_ticket_problem_menu" name="Problems" parent="website_supportzayd_ticket_header_ticket" action="website_supportzayd_ticket_problem_action" groups="support_manager" sequence="19"/>
+
+        <menuitem id="website_supportzayd_ticket_equipment_menu" name="List of Equipment's Model" parent="website_supportzayd_ticket_header_equipment" action="website_supportzayd_ticket_equipment_action" groups="support_manager" sequence="14"/>
+        <menuitem id="website_supportzayd_ticket_level_menu" name="Support Level" parent="website_supportzayd_ticket_header_ticket" action="website_supportzayd_ticket_level_action" groups="support_manager" sequence="21"/>
+        <menuitem id="website_supportzayd_ticket_type_equipment_menu" name="Type of Equipment" parent="website_supportzayd_ticket_header_equipment" action="website_supportzayd_ticket_item_type_action" groups="support_manager" sequence="15"/>
+        <menuitem id="website_supportzayd_department_menu" name="Departments" parent="website_supportzayd_ticket_header_module" action="website_supportzayd_department_action" groups="support_manager" sequence="28"/>
+        <!-- <menuitem id="website_supportzayd_sla_menu" name="SLA's" parent="website_supportzayd_config_parent_menu" action="website_supportzayd_sla_action" groups="support_manager" sequence="80"/> -->
+        <menuitem id="website_supportzayd_sla_policies_menu" name="SLA Policies" parent="website_supportzayd_ticket_header_sla" action="website_supportzayd_sla_policies_action" groups="support_manager" sequence="25"/>
+        <menuitem id="website_supportzayd_help_groups_menu" name="Help Groups" parent="website_supportzayd_ticket_header_ticket" action="website_supportzayd_help_groups_action" groups="support_manager" sequence="22"/>
+        <menuitem id="website_supportzayd_help_page_menu" name="Help Pages" parent="website_supportzayd_ticket_header_ticket" action="website_supportzayd_help_page_action" groups="support_manager" sequence="23"/>
+        <menuitem id="website_supportzayd_settings_menu" name="Settings" parent="website_supportzayd_ticket_header_module" action="website_supportzayd_settings_action" groups="support_manager" sequence="27"/>
+        <menuitem id="website_supportzayd_ticket_item_history_menu" name="Equipment History" parent="website_supportzayd_ticket_header_equipment" action="website_supportzayd_ticket_item_history_action" groups="support_manager" sequence="13"/>
+        <menuitem id="website_supportzayd_ticket_item_location_menu" name="Equipment Location" parent="website_supportzayd_ticket_header_equipment" action="website_supportzayd_ticket_item_location_action" groups="support_manager" sequence="12"/>
+
+    </data>
+</openerp>

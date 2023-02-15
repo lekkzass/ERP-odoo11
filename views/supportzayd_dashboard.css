@@ -1,0 +1,114 @@
+/*created by hafizalwi @23dec*/
+
+.o_helpdesk_dashboard {
+    position: fixed;
+    border: 8px solid #f9f9f9;
+    z-index: 10;
+    width: 100%;
+    background-color
+}
+
+.py-4 {
+    padding-bottom: 1.5rem !important;
+}
+
+.o_helpdesk_dashboard > div > table {
+    margin-bottom: 0;
+    border-spacing: 10px 0px;
+    border-collapse: separate;
+    white-space: initial;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #444B5A;
+}
+
+.o_text{
+    text-align: left;
+}
+
+.o_helpdesk_dashboard > div > table > tbody > tr > td {
+    vertical-align: middle;
+    text-align: center;
+    border-top: 1px solid white;
+    width: 25%;
+    height: 33px;
+}
+
+.table-sm td {
+    padding: 0.3rem;
+}
+
+.o_helpdesk_dashboard > div > table > tbody > tr > td.o_highlight, .o_helpdesk_dashboard > div > table > tbody > tr > td .o_highlight {
+    font-size: 20px;
+}
+
+.o_helpdesk_dashboard > div > table > tbody > tr > td.o_main {
+    background-color: #017e84;
+}
+
+.o_helpdesk_dashboard .o_dashboard_action {
+    cursor: pointer;
+}
+
+.o_helpdesk_dashboard > div > table > tbody > tr > td {
+    vertical-align: middle;
+    text-align: center;
+    border-top: 1px solid white;
+    width: 25%;
+    height: 33px;
+}
+
+.table-sm td {
+    padding: 0.3rem;
+}
+
+.o_helpdesk_dashboard > div > table > tbody > tr > td .o_highlight {
+    font-size: 20px;
+}
+
+.o_helpdesk_dashboard > div > table > tbody > tr > td span {
+    display: inline;
+}
+
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+        font-size: 14px;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.o_helpdesk_dashboard > div > table > tbody > tr > td.o_secondary {
+    background-color: #f6f7fa;
+}
+
+.o_helpdesk_dashboard > div > table > tbody > tr > td span {
+    display: inline;
+}
+
+
+.o_helpdesk_dashboard > div > table > tbody > tr > td {
+    text-align: center;
+}
+
+.o_helpdesk_dashboard > div > table {
+    border-spacing: 10px 0px;
+    border-collapse: separate;
+    white-space: initial;
+}
+
+.table {
+    color: #444B5A;
+}
+
+.o_web_client > .o_action_manager {
+    direction: ltr;
+}
+
+
+

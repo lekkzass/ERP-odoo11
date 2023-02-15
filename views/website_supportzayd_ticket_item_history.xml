@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="website_supportzayd_ticket_item_history_view_form" model="ir.ui.view">
+        <field name="name">website.supportzayd.ticket.item.history.view.form</field>
+        <field name="model">website.supportzayd.ticket.item.history</field>
+        <field name="arch" type="xml">
+            <form string="Location History">
+                <sheet>
+                    <group>
+      	                <field name="location_id"/>
+      	                <field name="date"/>
+      	                <field name="item_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+      <record id="website_supportzayd_ticket_item_history_view_tree" model="ir.ui.view">
+          <field name="name">website.supportzayd.ticket.item.history.tree.view</field>
+          <field name="model">website.supportzayd.ticket.item.history</field>
+          <field name="arch" type="xml">
+      	      <tree edit="false" default_order="date desc">
+                  <field name="location_id"/>
+                  <field name="date"/>
+      	          <field name="item_id"/>
+      	      </tree>
+      	  </field>
+      </record>
+
+      <record id="website_supportzayd_ticket_item_history_action" model="ir.actions.act_window">
+          <field name="name">Equipment's History of Location</field>
+          <field name="res_model">website.supportzayd.ticket.item.history</field>
+      	  <field name="view_type">form</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+	      <p>
+	          No equipment's history found
+	      </p>
+          </field>
+      </record>
+
+
+    </data>
+</openerp>
