@@ -29,7 +29,6 @@
       <record id="website_supportzayd_ticket_level_action" model="ir.actions.act_window">
           <field name="name">Support Ticket Level of Support</field>
           <field name="res_model">website.supportzayd.ticket.level</field>
-          <field name="view_type">form</field>
           <field name="view_mode">tree,form</field>
           <field name="help" type="html">
           <p>

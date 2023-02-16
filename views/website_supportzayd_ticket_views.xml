@@ -104,7 +104,7 @@
                                 <group>
                                     <field name="attachment_ids" attrs="{'invisible' :[('attachment_ids', '=', [])]}">
                                         <tree>
-                                            <field name="datas_fname"/>
+                                            <field name="name"/>
                                         </tree>
                                     </field>
                                 </group>
@@ -156,7 +156,7 @@
             </field>
         </record>
 
-        <record id="website.supportzayd_ticket_view_kanban" model="ir.ui.view">
+        <record id="website_supportzayd.ticket_view_kanban" model="ir.ui.view">
             <field name="name">website.supportzayd.ticket.view.kanban</field>
             <field name="model">website.supportzayd.ticket</field>
             <field name="priority" eval="100"/> <!-- priority 100 means its will become default view for this viewtype(kanban) if im not mistaken -->
@@ -180,8 +180,10 @@
 
                                 <div class="o_dropdown_kanban dropdown">
 
-                                    <a class="dropdown-toggle btn" data-toggle="dropdown" href="#" >
-                                        <span class="fa fa-ellipsis-v"/>
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+                                        <button class="btn fa fa-ellipsis-v" type="button" name="dropdown ellipsis button">
+
+                                        </button>
                                     </a>
                                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                                         <t t-if="widget.editable"><li><a type="edit">Edit</a></li></t>
@@ -214,7 +216,7 @@
                                                 <field name="priority_star" widget="priority"/>
                                             </div>
                                             <div class="oe_kanban_bottom_right">
-                                                <img t-att-src="kanban_image('res.users', 'image_medium', record.user_id.raw_value)" t-att-title="record.user_id.value" width="50" height="50" class="oe_kanban_avatar pull-right"/>
+                                                <img alt="image for the user assigned" t-att-src="kanban_image('res.users', 'image_128', record.user_id.raw_value)" t-att-title="record.user_id.value" width="50" height="50" class="oe_kanban_avatar pull-right"/>
                                             </div>
                                         </div>
                                     </div>
@@ -268,7 +270,9 @@
             </field>
         </record>
 
-        <!-- TO-DO sambung ni nanti, avg open hours, all set, tingagl adjust2 sikit lagi 12january -->
+
+        <!-- TODO sambung ni nanti, avg open hours, all set, tingagl adjust2 sikit lagi 12january 2022 -->
+        <!--
         <record id="website_supportzayd_ticket_view_pivot" model="ir.ui.view" >
             <field name="name">website.supportzayd.ticket pivot view</field>
             <field name="model">website.supportzayd.ticket</field>
@@ -276,10 +280,13 @@
                 <pivot string="Average Open Hours">
 
                     <field name="create_date" type="row" domain="[('create_date','&lt;',datetime.strftime('%%Y-%%m-%%d 23:59:59')), ('create_date','>=',(datetime.date.today()-datetime.timedelta(days=7)).strftime('%%Y-%%m-%%d 00:00:00'))]" />
+
+
                     <field name="time_to_close" type="col"/>
                 </pivot>
             </field>
         </record>
+-->
 
         <record id="website_supportzayd_ticket_view_tree" model="ir.ui.view">
             <field name="name">website.supportzayd.ticket tree view</field>
@@ -305,7 +312,7 @@
            <field name="name">Support Tickets</field>                                                   
            <field name="res_model">website.supportzayd.ticket</field>
            <field name="view_mode">tree,kanban,form,graph</field>
-           <field name="view_id" ref="website.supportzayd_ticket_view_kanban"></field>
+           <field name="view_id" ref="website_supportzayd.ticket_view_kanban"></field>
            <field name="help" type="html">
                <p>
                    No Support Tickets found
@@ -329,7 +336,7 @@
             <field name="name">Support Tickets(Technician)</field>
             <field name="res_model">website.supportzayd.ticket</field>
             <field name="view_mode">tree,kanban,form,graph</field>
-            <field name="view_id" ref="website.supportzayd_ticket_view_kanban"></field>
+            <field name="view_id" ref="website_supportzayd.ticket_view_kanban"></field>
             <field name="domain">[('user_id','=',uid)]</field> <!-- The main difference for technician is, the user logged in will only be able to see their "assigned tickets" ONLY-->
             <field name="help" type="html">
                 <p>

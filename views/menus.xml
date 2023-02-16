@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<openerp>
+<odoo>
     <data>
 
         <menuitem id="website_supportzayd_parent_menu" name="iSupport Ticket" groups="support_staff,support_technician" sequence="40" web_icon="website_supportzayd,static/description/menu_icon.png"/>
@@ -36,4 +36,4 @@
         <menuitem id="website_supportzayd_ticket_item_location_menu" name="Equipment Location" parent="website_supportzayd_ticket_header_equipment" action="website_supportzayd_ticket_item_location_action" groups="support_manager" sequence="12"/>
 
     </data>
-</openerp>
+</odoo>

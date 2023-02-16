@@ -26,8 +26,10 @@
 
                                 <div class="o_dropdown_kanban dropdown">
 
-                                    <a class="dropdown-toggle btn" data-toggle="dropdown" href="#" >
-                                        <span class="fa fa-ellipsis-v"/>
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+                                        <button class="btn fa fa-ellipsis-v" type="button" name="dropdown ellipsis button">
+
+                                        </button>
                                     </a>
                                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                                         <t t-if="widget.editable"><li><a type="edit">Edit</a></li></t>
@@ -71,7 +73,7 @@
 
                                             <div class="oe_kanban_bottom_right">
                                                 <div class="o_kanban_image">
-                                                    <img t-att-src="kanban_image('res.users', 'image_medium', record.user_id.raw_value)" t-att-title="record.user_id.value" width="80" height="80" />
+                                                    <img alt="image for assigned user" t-att-src="kanban_image('res.users', 'image_128', record.user_id.raw_value)" t-att-title="record.user_id.value" width="80" height="80" />
                                                 </div>
                                             </div>
                                         </div>
