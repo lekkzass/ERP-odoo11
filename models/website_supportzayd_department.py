@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 class WebsiteSupportDepartment(models.Model):
 
@@ -19,121 +19,154 @@ class WebsiteSupportDepartment(models.Model):
 
     #-------------- Sub Category Stats --------------------------
 
-    @api.one
+
     @api.depends('manager_ids', 'partner_ids')
+    @api.model
     def _compute_sub_category_ids(self):
+        for record in self:
+            # Unlink all existing records
+            for existing_records in record.env['website.supportzayd.department.subcategory'].search([('wsd_id', '=', record.id)]):
+                existing_records.unlink()
 
-        #Unlink all existing records
-        for si in self.env['website.supportzayd.department.subcategory'].search([('wsd_id', '=', self.id)]):
-            si.unlink()
 
-        extra_access = []
-        for extra_permission in self.partner_ids:
-            extra_access.append(extra_permission.id)
+            extra_access = []
+            for extra_permission in record.partner_ids:
+                extra_access.append(extra_permission.id)
 
-        for sub_category in self.env['website.supportzayd.ticket.subcategory'].search([]):
-            count = self.env['website.supportzayd.ticket'].search_count(['|', ('partner_id','=', self.env.user.partner_id.id), ('partner_id', 'in', extra_access), ('partner_id','!=',False), ('sub_category_id','=', sub_category.id)])
-            if count > 0:
-                self.env['website.supportzayd.department.subcategory'].create( {'wsd_id': self.id, 'subcategory_id': sub_category.id, 'count': count} )
+            for sub_category in self.env['website.supportzayd.ticket.subcategory'].search([]):
+                count = self.env['website.supportzayd.ticket'].search_count(
+                    ['|', ('partner_id', '=', self.env.user.partner_id.id), ('partner_id', 'in', extra_access),
+                     ('partner_id', '!=', False), ('sub_category_id', '=', sub_category.id)])
+                if count > 0:
+                    self.env['website.supportzayd.department.subcategory'].create(
+                        {'wsd_id': record.id, 'subcategory_id': sub_category.id, 'count': count})
 
-        self.sub_category_ids = self.env['website.supportzayd.department.subcategory'].search([('wsd_id', '=', self.id)], limit=5)
+            record.sub_category_ids = self.env['website.supportzayd.department.subcategory'].search(
+                [('wsd_id', '=', record.id)], limit=5)
 
-    @api.one
+    @api.model
     @api.depends('manager_ids', 'partner_ids')
     def _compute_sub_category_month_ids(self):
+        for record in self:
+            # Unlink all existing records
+            for existing_records in record.env['website.supportzayd.department.subcategory'].search([('wsd_month_id', '=', record.id)]):
+                existing_records.unlink()
 
-        #Unlink all existing records
-        for si in self.env['website.supportzayd.department.subcategory'].search([('wsd_month_id', '=', self.id)]):
-            si.unlink()
 
-        extra_access = []
-        for extra_permission in self.partner_ids:
-            extra_access.append(extra_permission.id)
 
-        for sub_category in self.env['website.supportzayd.ticket.subcategory'].search([]):
-            month_ago = (datetime.datetime.now() - datetime.timedelta(days=30) ).strftime("%Y-%m-%d %H:%M:%S")
-            count = self.env['website.supportzayd.ticket'].search_count(['|', ('partner_id','=', self.env.user.partner_id.id), ('partner_id', 'in', extra_access), ('partner_id','!=',False), ('sub_category_id','=', sub_category.id), ('create_date','>', month_ago ) ])
-            if count > 0:
-                self.env['website.supportzayd.department.subcategory'].create( {'wsd_month_id': self.id, 'subcategory_id': sub_category.id, 'count': count} )
+            extra_access = []
+            for extra_permission in record.partner_ids:
+                extra_access.append(extra_permission.id)
 
-        self.sub_category_month_ids = self.env['website.supportzayd.department.subcategory'].search([('wsd_month_id', '=', self.id)], limit=5)
+            sub_category_model = self.env['website.supportzayd.ticket.subcategory']
+            ticket_model = self.env['website.supportzayd.ticket']
+            sub_category_month_model = self.env['website.supportzayd.department.subcategory']
 
-    @api.one
+            month_ago = (datetime.datetime.now() - datetime.timedelta(days=30)).strftime("%Y-%m-%d %H:%M:%S")
+
+            for sub_category in sub_category_model.search([]):
+                count = ticket_model.search_count(['|', ('partner_id','=', self.env.user.partner_id.id), ('partner_id', 'in', extra_access), ('partner_id','!=',False), ('sub_category_id','=', sub_category.id), ('create_date','>', month_ago)])
+                if count > 0:
+                    sub_category_month_model.create({'wsd_month_id': record.id, 'subcategory_id': sub_category.id, 'count': count})
+
+            record.sub_category_month_ids = sub_category_month_model.search([('wsd_month_id', '=', record.id)], limit=5)
+
+
+    @api.model
     @api.depends('manager_ids', 'partner_ids')
     def _compute_sub_category_week_ids(self):
+        for record in self:
+            # Unlink all existing records
+            sub_categories = record.env['website.supportzayd.department.subcategory'].search(
+                [('wsd_week_id', '=', record.id)])
+            sub_categories.unlink()
 
-        #Unlink all existing records
-        for si in self.env['website.supportzayd.department.subcategory'].search([('wsd_week_id', '=', self.id)]):
-            si.unlink()
+            extra_access = []
+            for extra_permission in record.partner_ids:
+                extra_access.append(extra_permission.id)
 
-        extra_access = []
-        for extra_permission in self.partner_ids:
-            extra_access.append(extra_permission.id)
+            for sub_category in self.env['website.supportzayd.ticket.subcategory'].search([]):
+                week_ago = (datetime.datetime.now() - datetime.timedelta(days=7)).strftime("%Y-%m-%d %H:%M:%S")
+                count = self.env['website.supportzayd.ticket'].search_count(
+                    ['|', ('partner_id', '=', self.env.user.partner_id.id), ('partner_id', 'in', extra_access),
+                     ('partner_id', '!=', False), ('sub_category_id', '=', sub_category.id),
+                     ('create_date', '>', week_ago)])
+                if count > 0:
+                    self.env['website.supportzayd.department.subcategory'].create({
+                        'wsd_week_id': record.id,
+                        'subcategory_id': sub_category.id,
+                        'count': count
+                    })
 
-        for sub_category in self.env['website.supportzayd.ticket.subcategory'].search([]):
-            week_ago = (datetime.datetime.now() - datetime.timedelta(days=7) ).strftime("%Y-%m-%d %H:%M:%S")
-            count = self.env['website.supportzayd.ticket'].search_count(['|', ('partner_id','=', self.env.user.partner_id.id), ('partner_id', 'in', extra_access), ('partner_id','!=',False), ('sub_category_id','=', sub_category.id), ('create_date','>', week_ago ) ])
-            if count > 0:
-                self.env['website.supportzayd.department.subcategory'].create( {'wsd_week_id': self.id, 'subcategory_id': sub_category.id, 'count': count} )
-
-        self.sub_category_week_ids = self.env['website.supportzayd.department.subcategory'].search([('wsd_week_id', '=', self.id)], limit=5)
+            record.sub_category_week_ids = self.env['website.supportzayd.department.subcategory'].search(
+                [('wsd_week_id', '=', record.id)], limit=5)
 
     #-------------- Ticket Submit Stats --------------------------
 
-    @api.one
+    @api.model
     @api.depends('manager_ids', 'partner_ids')
     def _compute_submit_ticket_contact_ids(self):
+        for record in self:
+            # Unlink all existing records
+            for existing_records in record.env['website.supportzayd.department.submit'].search([('wsd_id', '=', record.id)]):
+                existing_records.unlink()
 
-        #Unlink all existing records
-        for si in self.env['website.supportzayd.department.submit'].search([('wsd_id', '=', self.id)]):
-            si.unlink()
 
-        for contact in self.partner_ids:
-            count = self.env['website.supportzayd.ticket'].search_count([('partner_id','=', contact.id)])
-            if count > 0:
-                self.env['website.supportzayd.department.submit'].create( {'wsd_id': self.id, 'partner_id': contact.id, 'count': count} )
+            for contact in record.partner_ids:
+                count = self.env['website.supportzayd.ticket'].search_count([('partner_id', '=', contact.id)])
+                if count > 0:
+                    self.env['website.supportzayd.department.submit'].create(
+                        {'wsd_id': record.id, 'partner_id': contact.id, 'count': count})
 
-        self.submit_ticket_contact_ids = self.env['website.supportzayd.department.submit'].search([('wsd_id', '=', self.id)], limit=5)
+            record.submit_ticket_contact_ids = self.env['website.supportzayd.department.submit'].search(
+                [('wsd_id', '=', record.id)], limit=5)
 
-    @api.one
+    @api.model
     @api.depends('manager_ids', 'partner_ids')
     def _compute_submit_ticket_contact_month_ids(self):
+        for record in self:
+            # Unlink all existing records
+            for existing_records in record.env['website.supportzayd.department.submit'].search([('wsd_month_id', '=', record.id)]):
+                existing_records.unlink()
 
-        #Unlink all existing records
-        for si in self.env['website.supportzayd.department.submit'].search([('wsd_month_id', '=', self.id)]):
-            si.unlink()
+            for contact in record.partner_ids:
+                month_ago = (datetime.datetime.now() - datetime.timedelta(days=30)).strftime("%Y-%m-%d %H:%M:%S")
+                count = self.env['website.supportzayd.ticket'].search_count(
+                    [('partner_id', '=', contact.id), ('create_date', '>', month_ago)])
+                if count > 0:
+                    self.env['website.supportzayd.department.submit'].create(
+                        {'wsd_month_id': record.id, 'partner_id': contact.id, 'count': count})
 
-        for contact in self.partner_ids:
+            record.submit_ticket_contact_month_ids = self.env['website.supportzayd.department.submit'].search(
+                [('wsd_month_id', '=', record.id)], limit=5)
 
-            month_ago = (datetime.datetime.now() - datetime.timedelta(days=30) ).strftime("%Y-%m-%d %H:%M:%S")
-            count = self.env['website.supportzayd.ticket'].search_count([('partner_id','=', contact.id), ('create_date','>', month_ago ) ])
-            if count > 0:
-                self.env['website.supportzayd.department.submit'].create( {'wsd_month_id': self.id, 'partner_id': contact.id, 'count': count} )
-
-        self.submit_ticket_contact_month_ids = self.env['website.supportzayd.department.submit'].search([('wsd_month_id', '=', self.id)], limit=5)
-
-    @api.one
+    @api.model
     @api.depends('manager_ids', 'partner_ids')
     def _compute_submit_ticket_contact_week_ids(self):
+        for record in self:
+            # Unlink all existing records
+            for existing_records in record.env['website.supportzayd.department.submit'].search([('wsd_week_id', '=', record.id)]):
+                existing_records.unlink()
 
-        #Unlink all existing records
-        for si in self.env['website.supportzayd.department.submit'].search([('wsd_week_id', '=', self.id)]):
-            si.unlink()
 
-        for contact in self.partner_ids:
-            week_ago = (datetime.datetime.now() - datetime.timedelta(days=7) ).strftime("%Y-%m-%d %H:%M:%S")
-            count = self.env['website.supportzayd.ticket'].search_count([('partner_id','=', contact.id), ('create_date','>', week_ago )])
-            if count > 0:
-                self.env['website.supportzayd.department.submit'].create( {'wsd_week_id': self.id, 'partner_id': contact.id, 'count': count} )
+            for contact in record.partner_ids:
+                week_ago = (datetime.datetime.now() - datetime.timedelta(days=7)).strftime("%Y-%m-%d %H:%M:%S")
+                count = self.env['website.supportzayd.ticket'].search_count(
+                    [('partner_id', '=', contact.id), ('create_date', '>', week_ago)])
+                if count > 0:
+                    self.env['website.supportzayd.department.submit'].create(
+                        {'wsd_week_id': record.id, 'partner_id': contact.id, 'count': count})
 
-        self.submit_ticket_contact_week_ids = self.env['website.supportzayd.department.submit'].search([('wsd_week_id', '=', self.id)], limit=5)
+            record.submit_ticket_contact_week_ids = self.env['website.supportzayd.department.submit'].search(
+                [('wsd_week_id', '=', record.id)], limit=5)
+
 
 class WebsiteSupportDepartmentContact(models.Model):
 
     _name = "website.supportzayd.department.contact"
 
     def _default_role(self):
-        return self.env['ir.model.data'].get_object('website_supportzayd','website_supportzayd_department_manager')
+        return self.env['ir.model.data']._get_object('website_supportzayd.website_supportzayd_department_manager')
 
     wsd_id = fields.Many2one('website.supportzayd.department', string="Department")
     role = fields.Many2one('website.supportzayd.department.role', string="Role", required="True", default=_default_role)

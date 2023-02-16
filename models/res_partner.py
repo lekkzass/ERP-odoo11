@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 class ResPartnerTicket(models.Model):
 
@@ -15,7 +15,7 @@ class ResPartnerTicket(models.Model):
     ticket_default_email_cc = fields.Char(string="Default Email CC")
     ticket_default_email_body = fields.Text(string="Default Email Body")
 
-    @api.multi
+    @api.model
     def create_support_ticket(self):
         self.ensure_one()
         return {
@@ -26,20 +26,23 @@ class ResPartnerTicket(models.Model):
             'target': 'new',
         }
 
-    @api.one
+    @api.model
     @api.depends('support_ticket_ids')
     def _count_support_tickets(self):
-        """Sets the amount support tickets owned by this customer"""
-        self.support_ticket_count = self.support_ticket_ids.sudo().search_count([('partner_id','=',self.id)])
+        for record in self:
+            record.support_ticket_count = record.support_ticket_ids.sudo().search_count([('partner_id','=',record.id)])
 
-    @api.one
+    @api.model
     @api.depends('support_ticket_ids')
     def _count_new_support_tickets(self):
         """Sets the amount of new support tickets owned by this customer"""
         opened_state = self.env['ir.model.data'].get_object('website_supportzayd', 'website_ticket_state_open')
-        self.new_support_ticket_count = self.support_ticket_ids.sudo().search_count([('partner_id','=',self.id), ('state','=',opened_state.id)])
+        for record in self:
+            record.new_support_ticket_count = record.support_ticket_ids.sudo().search_count(
+                [('partner_id', '=', record.id), ('state', '=', opened_state.id)])
 
-    @api.one
+    @api.model
     @api.depends('support_ticket_count', 'new_support_ticket_count')
     def _compute_support_ticket_string(self):
-        self.support_ticket_string = str(self.support_ticket_count) + " (" + str(self.new_support_ticket_count) + ")"
+        for record in self:
+            record.support_ticket_string = str(record.support_ticket_count) + " (" + str(record.new_support_ticket_count) + ")"

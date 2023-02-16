@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
 
       <record id="website_supportzayd_ticket_item_view_form" model="ir.ui.view">
@@ -25,7 +25,9 @@
                                 <group>
                                    <!-- <field name="name" string="Equipment name" placeholder="Eg: Dell Latitude 3660" class="oe_inline"/> -->
                                     <field name="EquipmentName" string="Equipment name" placeholder="Eg: Dell Latitude 3660" class="oe_inline"/>
-                                    <field name="partner_id" domain="[('supplier','=',True)]" help="Only 'suppliers' will be shown"/> <!-- This is so that Only supplier are shown -->
+                                    <!--<field name="partner_id" domain="[('supplier','=',True)]" help="Only 'suppliers' will be shown"/>--> <!-- This is so that Only supplier are shown -->
+
+                                    <field name="partner_id" domain="['|',('supplier_rank','=','1'),('supplier_rank','=','2')]" help="Only 'suppliers' will be shown"/> <!-- This is so that Only supplier are shown -->
                                     <field name="partner_reference" widget="many2many_tags" placeholder="Eg:DAAS1" options="{'color_field': 'color'}" />
                                     <field name="serial_no"/>
                                 </group>
@@ -95,9 +97,11 @@
                     <t t-name="kanban-box">
                         <div t-attf-class="#{kanban_color(record.color_kanban.raw_value)} oe_kanban_global_click">
                             <div class="o_dropdown_kanban dropdown">
-                                <a class="dropdown-toggle btn" data-toggle="dropdown" href="#" >
-                                    <span class="fa fa-ellipsis-v"/>
-                                </a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+                                        <button class="btn fa fa-ellipsis-v" type="button" name="dropdown ellipsis button">
+
+                                        </button>
+                                    </a>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                                     <t t-if="widget.editable">
                                         <li>
@@ -144,7 +148,6 @@
       <record id="website_supportzayd_ticket_item_action" model="ir.actions.act_window">
           <field name="name">Equipment Master List</field>
           <field name="res_model">website.supportzayd.ticket.item</field>
-      	  <field name="view_type">form</field>
           <field name="view_mode">tree,form,kanban</field>
           <field name="help" type="html">
 	      <p>
@@ -175,4 +178,4 @@
 
 
     </data>
-</openerp>
+</odoo>

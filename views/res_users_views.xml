@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<openerp>
+<odoo>
     <data>
         
         <record id="view_users_form_inherit_website_supportzayd" model="ir.ui.view">
@@ -18,4 +18,4 @@
        </record>
        
    </data>
-</openerp>
+</odoo>

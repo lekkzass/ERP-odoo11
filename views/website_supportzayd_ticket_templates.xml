@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!--
     <template id="support_assets_editor" inherit_id="website.assets_editor" name="Website Support Editor">
         <xpath expr="." position="inside">
             <script type="text/javascript" src="/website_supportzayd/static/src/js/website_supportzayd.editor.js"></script>
@@ -14,15 +15,17 @@
     </template>
 
     <template id="support_assets_backend" inherit_id="web.assets_backend" name="website support ticket backend assets">
-        <xpath expr="." position="inside">
+        <xpath expr="." position="inside"> -->
             <!--<script type="text/javascript" src="/website_supportzayd/static/src/js/HelpdeskWidget.js"></script>-->
-            <script type="text/javascript" src="/website_supportzayd/static/src/js/website_supportzayd.backend.js"></script>
-            <script type="text/javascript" src="/website_supportzayd/static/src/js/support_dashboard.js"></script>
+            <!--<script type="text/javascript" src="/website_supportzayd/static/src/js/website_supportzayd.backend.js"></script>
+            <script type="text/javascript" src="/website_supportzayd/static/src/js/support_dashboard.js"></script>-->
             <!--<script type="text/javascript" src="/website_supportzayd/static/src/js/support_dashboard_template.js"></script>-->
-            <link rel="stylesheet" href="/website_supportzayd/static/src/css/support_dashboard.css"/>
+
+    <!--<link rel="stylesheet" href="/website_supportzayd/static/src/css/support_dashboard.css"/>
 
         </xpath>
     </template>
+-->
 
     <template id="support_ticket_survey_page" name="Support Ticket Survey">
         <t t-call="website.layout">
@@ -451,7 +454,7 @@
     </template>
 
     <template id="content_new_help" inherit_id="website.user_navbar">
-        <xpath expr="//div[@id='o_new_content_menu_choices']//ul" position="inside">
+        <xpath expr="//div[@id='o_new_content_menu_choices']//div[@class='row']" position="inside">
              <li><a href="#" data-action="new_help_group"><i class="fa fa-question-circle"/><p>New Help Group</p></a></li>
              <li><a href="#" data-action="new_help_page"><i class="fa fa-info-circle"/><p>New Help Page</p></a></li>
         </xpath>

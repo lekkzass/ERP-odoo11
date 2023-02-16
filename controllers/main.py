@@ -10,8 +10,8 @@ import ast
 import logging
 _logger = logging.getLogger(__name__)
 
-import openerp.http as http
-from openerp.http import request
+import odoo.http as http
+from odoo.http import request
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, DEFAULT_SERVER_DATE_FORMAT
 
 from odoo.addons.http_routing.models.ir_http import slug
@@ -22,25 +22,25 @@ class SupportTicketController(http.Controller):
     def support_approve(self, ticket_id, **kwargs):
         support_ticket = request.env['website.supportzayd.ticket'].sudo().browse( int(ticket_id) )
 
-        awaiting_approval = request.env['ir.model.data'].get_object('website_supportzayd','awaiting_approval')
+        awaiting_approval = request.env.ref('website_supportzayd.awaiting_approval')
 
         if support_ticket.approval_id.id == awaiting_approval.id:
             #Change the ticket state to approved
-            website_ticket_state_approval_accepted = request.env['ir.model.data'].get_object('website_supportzayd','website_ticket_state_approval_accepted')
+            website_ticket_state_approval_accepted = request.env.ref('website_supportzayd.website_ticket_state_approval_accepted')
             support_ticket.state = website_ticket_state_approval_accepted.id
 
             #Also change the approval
-            approval_accepted = request.env['ir.model.data'].get_object('website_supportzayd','approval_accepted')
+            approval_accepted = request.env.ref('website_supportzayd.approval_accepted')
             support_ticket.approval_id = approval_accepted.id
 
             #Send an email out to everyone in the category notifing them the ticket has been approved
-            notification_template = request.env['ir.model.data'].sudo().get_object('website_supportzayd', 'support_ticket_approval_user')
-            support_ticket_menu = request.env['ir.model.data'].sudo().get_object('website_supportzayd', 'website_supportzayd_ticket_menu')
-            support_ticket_action = request.env['ir.model.data'].sudo().get_object('website_supportzayd', 'website_supportzayd_ticket_action')
+            notification_template = request.env.ref('website_supportzayd.support_ticket_approval_user')
+            support_ticket_menu = request.env.ref('website_supportzayd.website_supportzayd_ticket_menu')
+            support_ticket_action = request.env.ref('website_supportzayd.website_supportzayd_ticket_action')
 
             for my_user in support_ticket.category.cat_user_ids:
                 values = notification_template.generate_email(support_ticket.id)
-                values['body_html'] = values['body_html'].replace("_ticket_url_", "web#id=" + str(support_ticket.id) + "&view_type=form&model=website.supportzayd.ticket&menu_id=" + str(support_ticket_menu.id) + "&action=" + str(support_ticket_action.id) ).replace("_user_name_",  my_user.partner_id.name)
+                values['body_html'] = values['body_html'].replace("_ticket_url_", "web#id=" + str(support_ticket.id) + "&view_mode=form&model=website.supportzayd.ticket&menu_id=" + str(support_ticket_menu.id) + "&action=" + str(support_ticket_action.id) ).replace("_user_name_",  my_user.partner_id.name)
                 values['body'] = values['body_html']
                 values['email_to'] = my_user.partner_id.email
 
@@ -48,7 +48,7 @@ class SupportTicketController(http.Controller):
                 send_mail.send()
 
                 #Remove the message from the chatter since this would bloat the communication history by a lot
-                send_mail.mail_message_id.res_id = 0            
+                send_mail.mail_message_id.res_id = 0
 
             return "Request Approved Successfully"
         else:
@@ -58,25 +58,25 @@ class SupportTicketController(http.Controller):
     def support_disapprove(self, ticket_id, **kwargs):
         support_ticket = request.env['website.supportzayd.ticket'].sudo().browse( int(ticket_id) )
 
-        awaiting_approval = request.env['ir.model.data'].get_object('website_supportzayd','awaiting_approval')
+        awaiting_approval = request.env.ref('website_supportzayd.awaiting_approval')
 
         if support_ticket.approval_id.id == awaiting_approval.id:
             #Change the ticket state to disapproved
-            website_ticket_state_approval_rejected = request.env['ir.model.data'].get_object('website_supportzayd','website_ticket_state_approval_rejected')
+            website_ticket_state_approval_rejected = request.env.ref('website_supportzayd.website_ticket_state_approval_rejected')
             support_ticket.state = website_ticket_state_approval_rejected.id
 
             #Also change the approval
-            approval_rejected = request.env['ir.model.data'].get_object('website_supportzayd','approval_rejected')
+            approval_rejected = request.env.ref('website_supportzayd.approval_rejected')
             support_ticket.approval_id = approval_rejected.id
 
             #Send an email out to everyone in the category notifing them the ticket has been approved
-            notification_template = request.env['ir.model.data'].sudo().get_object('website_supportzayd', 'support_ticket_approval_user')
-            support_ticket_menu = request.env['ir.model.data'].sudo().get_object('website_supportzayd', 'website_supportzayd_ticket_menu')
-            support_ticket_action = request.env['ir.model.data'].sudo().get_object('website_supportzayd', 'website_supportzayd_ticket_action')
+            notification_template = request.env.ref('website_supportzayd.support_ticket_approval_user')
+            support_ticket_menu = request.env.ref('website_supportzayd.website_supportzayd_ticket_menu')
+            support_ticket_action = request.env.ref('website_supportzayd.website_supportzayd_ticket_action')
 
             for my_user in support_ticket.category.cat_user_ids:
                 values = notification_template.generate_email(support_ticket.id)
-                values['body_html'] = values['body_html'].replace("_ticket_url_", "web#id=" + str(support_ticket.id) + "&view_type=form&model=website.supportzayd.ticket&menu_id=" + str(support_ticket_menu.id) + "&action=" + str(support_ticket_action.id) ).replace("_user_name_",  my_user.partner_id.name)
+                values['body_html'] = values['body_html'].replace("_ticket_url_", "web#id=" + str(support_ticket.id) + "&view_mode=form&model=website.supportzayd.ticket&menu_id=" + str(support_ticket_menu.id) + "&action=" + str(support_ticket_action.id) ).replace("_user_name_",  my_user.partner_id.name)
                 values['body'] = values['body_html']
                 values['email_to'] = my_user.partner_id.email
 
@@ -85,7 +85,7 @@ class SupportTicketController(http.Controller):
 
                 #Remove the message from the chatter since this would bloat the communication history by a lot
                 send_mail.mail_message_id.res_id = 0
-                
+
             return "Request Rejected Successfully" #@hafizalwi2dec (Removed block of lines containing cat_user_ids for testing error)
         else:
             return "Ticket does not need approval"
@@ -205,7 +205,7 @@ class SupportTicketController(http.Controller):
         setting_allow_user_signup = request.env['ir.default'].get('website.supportzayd.settings', 'allow_user_signup')
 
         if setting_allow_user_signup:
- 
+
             values = {}
             for field_name, field_value in kw.items():
                 values[field_name] = field_value
@@ -217,11 +217,11 @@ class SupportTicketController(http.Controller):
             new_user.groups_id = False
 
             #Add the user to the support group
-            support_group = request.env['ir.model.data'].sudo().get_object('website_supportzayd', 'support_group')
+            support_group = request.env.ref('website_supportzayd.support_group')
             support_group.users = [(4, new_user.id)]
 
             #Also add them to the portal group so they can access the website
-            group_portal = request.env['ir.model.data'].sudo().get_object('base','group_portal')
+            group_portal = request.env.ref('base.group_portal')
             group_portal.users = [(4, new_user.id)]
 
             #Automatically sign the new user in
@@ -360,7 +360,7 @@ class SupportTicketController(http.Controller):
 
         setting_google_recaptcha_active = request.env['ir.default'].get('website.supportzayd.settings', 'google_recaptcha_active')
         setting_allow_website_priority_set = request.env['ir.default'].get('website.supportzayd.settings', 'allow_website_priority_set')
-            
+
         if setting_google_recaptcha_active:
 
             setting_google_captcha_secret_key = request.env['ir.default'].get('website.supportzayd.settings', 'google_captcha_secret_key')
@@ -374,7 +374,7 @@ class SupportTicketController(http.Controller):
 
             if response_json.json()['success'] is not True:
                 return werkzeug.utils.redirect("/supportzayd/ticket/submit")
-                
+
         my_attachment = ""
         file_name = ""
 
@@ -385,15 +385,14 @@ class SupportTicketController(http.Controller):
 
         #hafizalwi 15November2022, open_case (a required field), and state (required because in def create(), we are gonna send mail template, and mail template is set based on state ( which is 'open' by default if created normally by logged in users).
         open_case = datetime.datetime.now()
-        state = request.env['ir.model.data'].sudo().get_object('website_supportzayd',
-                                                                              'website_ticket_state_open')
+        state = request.env.ref('website_supportzayd.website_ticket_state_open')
 
         create_dict = {'open_case':open_case , 'person_name':values['person_name'],'category':values['category'], 'sub_category_id': sub_category, 'email':values['email'], 'description':values['description'], 'subject':values['subject'], 'attachment': my_attachment, 'attachment_filename': file_name}
 
         if http.request.env.user.name != "Public user":
 
             create_dict['channel'] = 'Website (User)'
-            
+
             partner = http.request.env.user.partner_id
             create_dict['partner_id'] = partner.id
 
@@ -406,11 +405,11 @@ class SupportTicketController(http.Controller):
         else:
 
             create_dict['channel'] = 'Website (Public)'
-            
+
             #Priority can only be set if backend setting allows everyone
             if 'priority' in values and setting_allow_website_priority_set == "everyone":
                 create_dict['priority_id'] = int(values['priority'])
-            
+
             #Automatically assign the partner if email matches
             search_partner = request.env['res.partner'].sudo().search([('email','=', values['email'] )])
             if len(search_partner) > 0:
@@ -436,7 +435,7 @@ class SupportTicketController(http.Controller):
                     request.env['ir.attachment'].sudo().create({
                         'name': c_file.filename,
                         'datas': base64.b64encode(data),
-                        'datas_fname': c_file.filename,
+                        'name': c_file.filename,
                         'res_model': 'website.supportzayd.ticket',
                         'res_id': new_ticket_id.id
                     })
@@ -456,10 +455,10 @@ class SupportTicketController(http.Controller):
         values = {}
         for field_name, field_value in kw.items():
             values[field_name] = field_value
-        
+
         #Determine which tickets the logged in user can see
         ticket_access = []
-        
+
         #Can see own tickets
         ticket_access.append(http.request.env.user.partner_id.id)
 
@@ -473,13 +472,13 @@ class SupportTicketController(http.Controller):
                 ticket_access.append(contact.id)
 
         search_t = [('partner_id', 'in', ticket_access), ('partner_id','!=',False)]
-        
+
         if 'state' in values:
             search_t.append(('state', '=', int(values['state'])))
 
         support_tickets = request.env['website.supportzayd.ticket'].sudo().search(search_t)
 
-        no_approval_required = request.env['ir.model.data'].get_object('website_supportzayd','no_approval_required')
+        no_approval_required = request.env.ref('website_supportzayd.no_approval_required')
         change_requests = request.env['website.supportzayd.ticket'].sudo().search([('partner_id', 'in', ticket_access), ('partner_id','!=',False), ('approval_id','!=',no_approval_required.id) ], order="planned_time desc")
 
         ticket_states = request.env['website.supportzayd.ticket.states'].sudo().search([])
@@ -533,7 +532,7 @@ class SupportTicketController(http.Controller):
 
         http.request.env['website.supportzayd.ticket.message'].sudo().create({'ticket_id':support_ticket.id, 'by': 'customer','content':values['comment']})
 
-        support_ticket.state = request.env['ir.model.data'].sudo().get_object('website_supportzayd', 'website_ticket_state_customer_replied')
+        support_ticket.state = request.env.ref('website_supportzayd.website_ticket_state_customer_replied')
 
         attachments = []
         if 'file' in values:
@@ -545,7 +544,7 @@ class SupportTicketController(http.Controller):
                     new_attachment = request.env['ir.attachment'].sudo().create({
                         'name': c_file.filename,
                         'datas': base64.b64encode(data),
-                        'datas_fname': c_file.filename,
+                        'name': c_file.filename,
                         'res_model': 'website.supportzayd.ticket',
                         'res_id': support_ticket.id
                     })
@@ -570,7 +569,7 @@ class SupportTicketController(http.Controller):
 
             http.request.env['website.supportzayd.ticket.message'].sudo().create({'ticket_id':ticket.id, 'by': 'customer','content':values['comment']})
 
-            ticket.state = request.env['ir.model.data'].sudo().get_object('website_supportzayd', 'website_ticket_state_customer_replied')
+            ticket.state = request.env.ref('website_supportzayd.website_ticket_state_customer_replied')
 
             attachments = []
             if 'file' in values:
@@ -582,7 +581,7 @@ class SupportTicketController(http.Controller):
                         new_attachment = request.env['ir.attachment'].sudo().create({
                             'name': c_file.filename,
                             'datas': base64.b64encode(data),
-                            'datas_fname': c_file.filename,
+                            'name': c_file.filename,
                             'res_model': 'website.supportzayd.ticket',
                             'res_id': ticket.id
                         })
@@ -610,7 +609,7 @@ class SupportTicketController(http.Controller):
         #check if this user owns this ticket
         if ticket.partner_id.id == http.request.env.user.partner_id.id or ticket.partner_id in http.request.env.user.partner_id.stp_ids:
 
-            customer_closed_state = request.env['ir.model.data'].sudo().get_object('website_supportzayd', 'website_ticket_state_customer_closed')
+            customer_closed_state = request.env.ref('website_supportzayd.website_ticket_state_customer_closed')
             ticket.state = customer_closed_state
 
             ticket.close_time = datetime.datetime.now()

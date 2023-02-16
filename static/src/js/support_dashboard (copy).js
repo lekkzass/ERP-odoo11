@@ -1,23 +1,22 @@
 odoo.define('website_supportzayd.SupportDashboard', function (require) {
 "use strict";
 
-
 var AbstractController = require('web.AbstractController');
 var AbstractModel = require('web.AbstractModel');
 var AbstractRenderer = require('web.AbstractRenderer');
 var AbstractView = require('web.AbstractView');
 var viewRegistry = require('web.view_registry');
 
-
 var SupportDashboardController = AbstractController.extend({});
 var SupportDashboardRenderer = AbstractRenderer.extend({});
 var SupportDashboardModel = AbstractModel.extend({});
 
-//var support_dashboard=View.extend is optional to only for control panel GUIS
-//var support_dashboard= View.extend({
- //icon: 'fa-cogs',
- //display_name: _lt("Dashboard view"),
-//});
+//var support_dashboard=View.extend is optional to only for control panel GUIS in odoo11, but it is needed in odoo15
+/*var support_dashboard= View.extend({
+ icon: 'fa-cogs',
+ display_name: _lt("Dashboard view"),
+});
+*/
 
 var SupportDashboardView = AbstractView.extend({});
 
