@@ -1,11 +1,11 @@
 {
     'name': "Support Ticket @Sigmarectrix",
-    'version': "1.7.1",
-    'author': "Sigmarectrix, Zayd",
+    'version': "15.0.1",
+    'author': "Sigmarectrix, Hafiz Alwi, Zayd",
     'category': "Tools",
     'summary': "A helpdesk / support ticket system for your website",
     'description': "A helpdesk / support ticket system for your website",
-    'license':'LGPL-3',
+    'license': 'LGPL-3',
     'data': [
         'data/ir.module.category.csv',
         'data/res.groups.xml',
@@ -15,11 +15,11 @@
         'views/website_supportzayd_ticket_close_views.xml',
         'views/website_supportzayd_ticket_merge_views.xml',
         'views/website_supportzayd_ticket_views.xml',
-	#'views/website_supportzayd_ticket_views_new.xml',
-        'views/website_supportzayd_ticket_equipment_views.xml',	
+        # 'views/website_supportzayd_ticket_views_new.xml',
+        'views/website_supportzayd_ticket_equipment_views.xml',
         'views/website_supportzayd_ticket_categories_views.xml',
         'views/website_supportzayd_ticket_subcategory_views.xml',
-	'views/website_supportzayd_dashboard_views.xml',
+        'views/website_supportzayd_dashboard_views.xml',
         'views/website_supportzayd_ticket_states_views.xml',
         'views/res_partner_views.xml',
         'views/res_users_views.xml',
@@ -32,12 +32,12 @@
         'views/support_dashboard_view.xml',
         'views/website_supportzayd_ticket_sla_policies_views.xml',
         'views/website_supportzayd_ticket_level.xml',
-	'views/website_supportzayd_ticket_item_type_views.xml',
-	    #'views/hr_employee_view.xml',
-	    #'views/res_config_settings_views.xml',
-	    #'views/web_asset_backend_template.xml',
-	'views/website_supportzayd_ticket_item_history.xml',
-	'views/website_supportzayd_ticket_item_location.xml',
+        'views/website_supportzayd_ticket_item_type_views.xml',
+        # 'views/hr_employee_view.xml',
+        # 'views/res_config_settings_views.xml',
+        # 'views/web_asset_backend_template.xml',
+        'views/website_supportzayd_ticket_item_history.xml',
+        'views/website_supportzayd_ticket_item_location.xml',
         'views/menus.xml',
         'data/website_supportzayd_sequence.xml',
         'data/website.supportzayd.ticket.states.xml',
@@ -48,15 +48,34 @@
         'data/website.supportzayd.department.role.csv',
         'data/website.supportzayd.ticket.approval.xml',
         'data/ir.cron.xml',
-	'data/website.supportzayd.ticket.level.xml',
-	
+        'data/website.supportzayd.ticket.level.xml',
+
         'security/ir.model.access.csv',
 
     ],
+    'assets': {
+        'web.assets_backend': [
+            '/website_supportzayd/static/src/js/website_supportzayd.backend.js',
+            '/website_supportzayd/static/src/js/support_dashboard.js',
+            '/website_supportzayd/static/src/css/support_dashboard.css',
+        ],
+        'web.assets_frontend': [
+            '/website_supportzayd/static/src/css/support.css',
+        ],
+        'website.assets_editor': [
+            '/website_supportzayd/static/src/js/website_supportzayd.editor.js',
+        ],
+        'web.assets_qweb': [
+            "/website_supportzayd/static/src/xml/support_dashboard.xml",
+            "/website_supportzayd/static/src/xml/attendance.xml",
+        ]
+
+    },
+
     'demo': [],
-    'qweb': ["static/src/xml/support_dashboard.xml", "static/src/xml/attendance.xml",],
-    'depends': ['base','mail','web', 'website','resource'],
-    'images':[
+    #'qweb': ["static/src/xml/support_dashboard.xml", "static/src/xml/attendance.xml", ],
+    'depends': ['base', 'mail', 'web', 'website', 'resource'],
+    'images': [
         'static/description/3.jpg',
         'static/description/1.jpg',
         'static/description/2.jpg',
