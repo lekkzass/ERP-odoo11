@@ -2,10 +2,10 @@
 import logging
 _logger = logging.getLogger(__name__)
 import requests
-from openerp.http import request
+from odoo.http import request
 import odoo
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 class WebsiteSupportSettings(models.Model):
 
@@ -28,10 +28,10 @@ class WebsiteSupportSettings(models.Model):
     google_recaptcha_active = fields.Boolean(string="Google reCAPTCHA Active")
     google_captcha_client_key = fields.Char(string="reCAPTCHA Client Key")
     google_captcha_secret_key = fields.Char(string="reCAPTCHA Secret Key")
-    allow_website_priority_set = fields.Selection([("partner","Partner Only"), ("everyone","Everyone")], string="Allow Website Priority Set", help="Cusomters can set the priority of a ticket when submitting via the website form\nPartner Only = logged in user")
-    allow_auto_sla_criteria = fields.Boolean(String="Allow auto SLA activation based on Criteria")
+    allow_website_priority_set = fields.Selection([("partner","Partner Only"), ("everyone","Everyone")], string="Allow Website Priority Set", help="Cusomters can set the priority of a ticket when submitting via the website form\nPartner Only = logged in user", ondelete='set default')
+    allow_auto_sla_criteria = fields.Boolean(string="Allow auto SLA activation based on Criteria")
 
-    @api.multi
+    @api.model
     def set_values(self):
         super(WebsiteSupportSettings, self).set_values()
         self.env['ir.default'].set('website.supportzayd.settings', 'auto_create_contact', self.auto_create_contact)

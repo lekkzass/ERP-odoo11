@@ -2,10 +2,9 @@
 import unicodedata
 import re
 
-from openerp import api, fields, models
-from openerp.http import request
-from openerp.tools import html_escape as escape, ustr, image_resize_and_sharpen, image_save_for_web
-
+from odoo import api, fields, models
+from odoo.http import request
+from PIL import Image
 from odoo.addons.http_routing.models.ir_http import slug
 
 class WebsiteSupportHelpGroups(models.Model):
@@ -22,11 +21,12 @@ class WebsiteSupportHelpGroups(models.Model):
     group_ids = fields.Many2many('res.groups', string="Privilege Groups")
     partner_ids = fields.Many2many('res.partner', string="Privilege Contacts")
 
-    @api.one
+    @api.model
     @api.depends('page_ids')
     def _page_count(self):
         """Amount of help pages in a help group"""
-        self.page_count = self.env['website.supportzayd.help.page'].search_count([('group_id','=',self.id)])
+        for record in self:
+            record.page_count = record.env['website.supportzayd.help.page'].search_count([('group_id', '=', record.id)])
 
     @api.model
     def create(self, values):
@@ -50,23 +50,26 @@ class WebsiteSupportHelpPage(models.Model):
     feedback_average = fields.Float(string="Feedback Average Rating", compute="_compute_feedback_average")
     feedback_count = fields.Integer(string="Feedback Count", compute="_compute_feedback_count")
 
-    @api.one
+    @api.model
     @api.depends('feedback_ids')
     def _compute_feedback_count(self):
-        self.feedback_count = len(self.feedback_ids)
+        for record in self:
 
-    @api.one
+            record.feedback_count = len(record.feedback_ids)
+
+    @api.model
     @api.depends('feedback_ids')
     def _compute_feedback_average(self):
-        average = 0
+        for record in self:
+            average = 0
+            for fb in record.feedback_ids:
+                average += fb.feedback_rating
 
-        for fb in self.feedback_ids:
-            average += fb.feedback_rating
+            if len(record.feedback_ids) > 0:
+                record.feedback_average = average / len(record.feedback_ids)
+            else:
+                record.feedback_average = 0
 
-        if len(self.feedback_ids) > 0:
-            self.feedback_average = average / len(self.feedback_ids)
-        else:
-           self.feedback_average = 0
 
     @api.model
     def create(self, values):
