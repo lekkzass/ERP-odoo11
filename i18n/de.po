@@ -1209,7 +1209,7 @@ msgstr ""
 "konfigurieren"
 
 #. module: website_supportzayd
-#. openerp-web
+#. odoo-web
 #: code:addons/website_supportzayd/static/src/js/website_supportzayd.editor.js:61
 #, python-format
 msgid "Help Group"
@@ -1487,7 +1487,7 @@ msgid "Name"
 msgstr "Name"
 
 #. module: website_supportzayd
-#. openerp-web
+#. odoo-web
 #: code:addons/website_supportzayd/static/src/js/website_supportzayd.editor.js:60
 #: model:ir.ui.view,arch_db:website_supportzayd.content_new_help
 #, python-format
@@ -1495,7 +1495,7 @@ msgid "New Help Group"
 msgstr "Neue Hilfeseite Gruppe"
 
 #. module: website_supportzayd
-#. openerp-web
+#. odoo-web
 #: code:addons/website_supportzayd/static/src/js/website_supportzayd.editor.js:28
 #: model:ir.ui.view,arch_db:website_supportzayd.content_new_help
 #, python-format
