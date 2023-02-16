@@ -117,7 +117,6 @@ var SupportDashboardRenderer = KanbanRenderer.extend({
                 type: 'ir.actions.act_window',
                 res_model: 'website.supportzayd.ticket',
                 view_mode: 'tree,form',
-                view_type: 'form',
                 views: [[false, 'list'],[false, 'form']],
                 domain: [['state.name','=', 'Open'],['sla_timer','<','0']], // set domain to only show tickets with status 'OPEN'
                 target: 'current',
@@ -134,7 +133,6 @@ var SupportDashboardRenderer = KanbanRenderer.extend({
                 type: 'ir.actions.act_window',
                 res_model: 'website.supportzayd.ticket',
                 view_mode: 'tree,form',
-                view_type: 'form',
                 views: [[false, 'list'],[false, 'form']],
                 domain: [['state.name','=', 'Open'],['sla_timer','<','0']],
                 target: 'current',
@@ -152,7 +150,6 @@ var SupportDashboardRenderer = KanbanRenderer.extend({
                 type: 'ir.actions.act_window',
                 res_model: 'website.supportzayd.ticket',
                 view_mode: 'tree,form',
-                view_type: 'form',
                 views: [[false, 'list'],[false, 'form']],
                 domain: [['state.name','=', 'Open'],['sla_timer','<','0']],
                 target: 'current',
@@ -382,7 +379,6 @@ var SupportDashboardRenderer = KanbanRenderer.extend({
                 type: 'ir.actions.act_window',
                 res_model: 'website.supportzayd.ticket',
                 view_mode: 'tree,form',
-                view_type: 'form',
                 views: [[false, 'list'],[false, 'form']],
                 //domain: [['employee_id','=', this.login_employee.id]],
                 target: 'current',
@@ -399,7 +395,6 @@ var SupportDashboardRenderer = KanbanRenderer.extend({
                 type: 'ir.actions.act_window',
                 res_model: 'website.supportzayd.ticket',
                 view_mode: 'tree,form',
-                view_type: 'form',
                 views: [[false, 'list'],[false, 'form']],
                 domain: [['state.name','in',['Open','Customer Replied']]],
                 target: 'current',
@@ -417,7 +412,6 @@ var SupportDashboardRenderer = KanbanRenderer.extend({
                 type: 'ir.actions.act_window',
                 res_model: 'website.supportzayd.ticket',
                 view_mode: 'tree,form',
-                view_type: 'form',
                 views: [[false, 'list'],[false, 'form']],
                 domain: [['state.name','in',['Open','Customer Replied']]],
                 target: 'current',
@@ -435,7 +429,6 @@ var SupportDashboardRenderer = KanbanRenderer.extend({
                 type: 'ir.actions.act_window',
                 res_model: 'website.supportzayd.ticket',
                 view_mode: 'tree,form',
-                view_type: 'form',
                 views: [[false, 'list'],[false, 'form']],
                 //domain: [['employee_id','=', this.login_employee.id]],
                 target: 'current',
@@ -451,7 +444,6 @@ var SupportDashboardRenderer = KanbanRenderer.extend({
                 type: 'ir.actions.act_window',
                 res_model: 'website.supportzayd.ticket',
                 view_mode: 'tree,form',
-                view_type: 'form',
                 views: [[false, 'list'],[false, 'form']],
                 //domain: [['employee_id','=', this.login_employee.id]],
                 target: 'current',
@@ -468,7 +460,6 @@ var SupportDashboardRenderer = KanbanRenderer.extend({
                 type: 'ir.actions.act_window',
                 res_model: 'website.supportzayd.ticket',
                 view_mode: 'tree,form',
-                view_type: 'form',
                 views: [[false, 'list'],[false, 'form']],
                 //domain: [['employee_id','=', this.login_employee.id]],
                 target: 'current',
@@ -486,12 +477,21 @@ var SupportDashboardModel = KanbanModel.extend({
 
 });
 
+/*var support_dashboard= View.extend({
+ icon: 'fa-cogs',
+ display_name: _lt("Dashboard view"),
+});
+*/
+
 var SupportDashboardView = KanbanView.extend({
-    config: {
+
+    config: _.extend({}, KanbanView.prototype.config, {
         Model: SupportDashboardModel,
         Controller: SupportDashboardController,
         Renderer: SupportDashboardRenderer,
-    },
+    }),
+
+
 });
 
 
